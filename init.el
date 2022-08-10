@@ -143,6 +143,8 @@
   (schon/leader-keys
    "t" '(:ignore t :which-key "toggles")))
 
+;; Forge must be included before evil or we get import errors:
+(require 'forge)
 
 ;; EVIL MODE
 (use-package evil
@@ -173,13 +175,22 @@
 (use-package hydra)
 
 (defhydra hydra-text-scale (:timeout 4)
-  "scale text"
+  "scale texts"
   ("j" text-scale-increase "in")
   ("k" text-scale-decrease "out")
-  ("f" nil "finished" :exit t))
+  ("q" nil "quit" :exit t))
 
 (schon/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(defhydra hydra-adjust-window (:timeout 4)
+ "Scale Window Size"
+ ("+" evil-window-increase-height "Taller")
+ ("-" evil-window-decrease-height "Shorter")
+ ("q" nill "quit" :exit t))
+
+(schon/leader-keys
+ "tw" '(hydra-adjust-window/body :which-key "Scale Window"))
 
 (use-package rg)
 
@@ -210,7 +221,7 @@
 (defun my-tab ()
   (interactive)
   (or (copilot-accept-completion)
-      (ac-expand nil))
+      (ac-expand nil)))
 
 (with-eval-after-load 'auto-complete
   ; disable inline preview
@@ -219,7 +230,7 @@
   (setq ac-candidate-menu-min 0))
   
 (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "C-n") 'copilot-next-completion)
+(define-key copilot-completion-map (kbd "C-p") 'copilot-previous-completion)
 
-
-
+(global-copilot-mode 1)
