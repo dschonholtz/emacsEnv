@@ -209,6 +209,24 @@
   :commands (magit-status magit-get-current-status)
   :custom (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+(defun efs/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq evil-auto-indent nil))
+
+(use-package org
+  ;;  :hook (org-mode . efs/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▼"
+	org-hide-emphasis-markers t))
+
+(use-package org-bullets
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '(?◉ ?○ ?◎ ?● ?◍ ?◎ ?◐ ?◑ ?◒ ?◓ ?◔ ?◕ ?◖ ?◗ ?◘ ?◙ ?◚ ?◛ ?◜ ?◝ ?◞ ?◟ ?◠ ?◡ ?◢ ?◣ ?◤ ?◥ ?◦ ?◧ ?◨ ?◩ ?◪ ?◫ "◬" "◭" "◮" "◯")))
+
 ;; End section of emacs from scratch start my own config
 
 (use-package copilot
